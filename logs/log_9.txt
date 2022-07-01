@@ -1,0 +1,59 @@
+# Printing config file data:
+debug: True
+log_files: tmp/log_cnt.txt
+
+# XGBoost Version: 1.6.1
+# Printing config file data for database:
+db_name: imdb
+tables_name: cdirectors, cactors, cdirectors_genres, cmovies_directors, croles, cmovies, cmovies_genres
+columns_header: cdirectors:id, cdirectors:first_name, cdirectors:last_name, cdirectors_genres:id, cdirectors_genres:genre, cdirectors_genres:prob, cmovies_directors:id, cmovies_directors:movie_id, cmovies:movie_id, cmovies:name, cmovies:year, cmovies:rank, cmovies_genres:movie_id, cmovies_genres:movies_genre, croles:actor_id, croles:movie_id, croles:role, cactors:actor_id, cactors:first_name, cactors:last_name, cactors:gender
+
+# Printing the sql query:
+qStmt: Select * from cdirectors natural join cactors natural join cdirectors_genres natural join cmovies_directors natural join croles natural join cmovies natural join cmovies_genres where rank != 'None'; 
+
+# Creating the database
+# Printing sql details
+db_file_path: data/imdb.db
+sql_file_path: data/imdb.sql
+# data/imdb.db file already exist
+
+# SQL table header:['id', 'first_name', 'last_name', 'actor_id', 'gender', 'genre', 'prob', 'movie_id', 'role', 'name', 'year', 'rank', 'movies_genre']
+# SQL table (first 5 rows):
+{'id': 13407, 'first_name': 'Jackie (I)', 'last_name': 'Chan', 'actor_id': 80684, 'gender': 'M', 'genre': 'Action', 'prob': 0.894737, 'movie_id': 52, 'role': 'Dragon Mi Yong', 'name': "'A' gai waak", 'year': 1983, 'rank': 7.2, 'movies_genre': 'Action'}
+{'id': 13407, 'first_name': 'Jackie (I)', 'last_name': 'Chan', 'actor_id': 80684, 'gender': 'M', 'genre': 'Action', 'prob': 0.894737, 'movie_id': 52, 'role': 'Dragon Mi Yong', 'name': "'A' gai waak", 'year': 1983, 'rank': 7.2, 'movies_genre': 'Comedy'}
+{'id': 13407, 'first_name': 'Jackie (I)', 'last_name': 'Chan', 'actor_id': 80684, 'gender': 'M', 'genre': 'Adventure', 'prob': 0.157895, 'movie_id': 52, 'role': 'Dragon Mi Yong', 'name': "'A' gai waak", 'year': 1983, 'rank': 7.2, 'movies_genre': 'Action'}
+{'id': 13407, 'first_name': 'Jackie (I)', 'last_name': 'Chan', 'actor_id': 80684, 'gender': 'M', 'genre': 'Adventure', 'prob': 0.157895, 'movie_id': 52, 'role': 'Dragon Mi Yong', 'name': "'A' gai waak", 'year': 1983, 'rank': 7.2, 'movies_genre': 'Comedy'}
+{'id': 13407, 'first_name': 'Jackie (I)', 'last_name': 'Chan', 'actor_id': 80684, 'gender': 'M', 'genre': 'Comedy', 'prob': 0.578947, 'movie_id': 52, 'role': 'Dragon Mi Yong', 'name': "'A' gai waak", 'year': 1983, 'rank': 7.2, 'movies_genre': 'Action'}
+
+df:
+          id  first_name last_name  actor_id gender      genre      prob  movie_id                  role                   name  year  rank movies_genre
+0      13407  Jackie (I)      Chan     80684      M     Action  0.894737        52        Dragon Mi Yong           'A' gai waak  1983   7.2       Action
+1      13407  Jackie (I)      Chan     80684      M     Action  0.894737        52        Dragon Mi Yong           'A' gai waak  1983   7.2       Comedy
+2      13407  Jackie (I)      Chan     80684      M  Adventure  0.157895        52        Dragon Mi Yong           'A' gai waak  1983   7.2       Action
+3      13407  Jackie (I)      Chan     80684      M  Adventure  0.157895        52        Dragon Mi Yong           'A' gai waak  1983   7.2       Comedy
+4      13407  Jackie (I)      Chan     80684      M     Comedy  0.578947        52        Dragon Mi Yong           'A' gai waak  1983   7.2       Action
+...      ...         ...       ...       ...    ...        ...       ...       ...                   ...                    ...   ...   ...          ...
+37192  78383     Jacques      Tati    467195      M      Short  0.285714    377662               Postman  cole des facteurs, L'  1947   7.7       Comedy
+37193  78383     Jacques      Tati    467195      M      Short  0.285714    377662               Postman  cole des facteurs, L'  1947   7.7        Short
+37194  54920  João César  Monteiro    327518      M     Comedy  0.400000    378456  Man Outside Bathroom      ltimo Mergulho, O  1992   6.4        Drama
+37195  54920  João César  Monteiro    327518      M      Drama  0.400000    378456  Man Outside Bathroom      ltimo Mergulho, O  1992   6.4        Drama
+37196  54920  João César  Monteiro    327518      M      Short  0.400000    378456  Man Outside Bathroom      ltimo Mergulho, O  1992   6.4        Drama
+
+[37197 rows x 13 columns]
+
+id            0.0
+first_name    0.0
+last_name     0.0
+actor_id      0.0
+gender        0.0
+genre         0.0
+prob          0.0
+movie_id      0.0
+role          0.0
+name          0.0
+year          0.0
+rank          0.0
+dtype: float64
+0.0
+# Current log number is: 9
+# Next log number is: 10

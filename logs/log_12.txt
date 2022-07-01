@@ -1,0 +1,101 @@
+# Printing config file data:
+debug: True
+log_files: tmp/log_cnt.txt
+
+# XGBoost Version: 1.6.1
+# Printing config file data for database:
+db_name: imdb
+tables_name: cdirectors, cactors, cdirectors_genres, cmovies_directors, croles, cmovies, cmovies_genres
+columns_header: cdirectors:id, cdirectors:first_name, cdirectors:last_name, cdirectors_genres:id, cdirectors_genres:genre, cdirectors_genres:prob, cmovies_directors:id, cmovies_directors:movie_id, cmovies:movie_id, cmovies:name, cmovies:year, cmovies:rank, cmovies_genres:movie_id, cmovies_genres:movies_genre, croles:actor_id, croles:movie_id, croles:role, cactors:actor_id, cactors:first_name, cactors:last_name, cactors:gender
+
+# Printing the sql query:
+qStmt: Select * from cdirectors natural join cactors natural join cdirectors_genres natural join cmovies_directors natural join croles natural join cmovies natural join cmovies_genres where rank != 'None'; 
+
+# Creating the database
+# Printing sql details
+db_file_path: data/imdb.db
+sql_file_path: data/imdb.sql
+# data/imdb.db file already exist
+
+# SQL table header:['id', 'first_name', 'last_name', 'actor_id', 'gender', 'genre', 'prob', 'movie_id', 'role', 'name', 'year', 'rank', 'movies_genre']
+# SQL table (first 5 rows):
+{'id': 13407, 'first_name': 'Jackie (I)', 'last_name': 'Chan', 'actor_id': 80684, 'gender': 'M', 'genre': 'Action', 'prob': 0.894737, 'movie_id': 52, 'role': 'Dragon Mi Yong', 'name': "'A' gai waak", 'year': 1983, 'rank': 7.2, 'movies_genre': 'Action'}
+{'id': 13407, 'first_name': 'Jackie (I)', 'last_name': 'Chan', 'actor_id': 80684, 'gender': 'M', 'genre': 'Action', 'prob': 0.894737, 'movie_id': 52, 'role': 'Dragon Mi Yong', 'name': "'A' gai waak", 'year': 1983, 'rank': 7.2, 'movies_genre': 'Comedy'}
+{'id': 13407, 'first_name': 'Jackie (I)', 'last_name': 'Chan', 'actor_id': 80684, 'gender': 'M', 'genre': 'Adventure', 'prob': 0.157895, 'movie_id': 52, 'role': 'Dragon Mi Yong', 'name': "'A' gai waak", 'year': 1983, 'rank': 7.2, 'movies_genre': 'Action'}
+{'id': 13407, 'first_name': 'Jackie (I)', 'last_name': 'Chan', 'actor_id': 80684, 'gender': 'M', 'genre': 'Adventure', 'prob': 0.157895, 'movie_id': 52, 'role': 'Dragon Mi Yong', 'name': "'A' gai waak", 'year': 1983, 'rank': 7.2, 'movies_genre': 'Comedy'}
+{'id': 13407, 'first_name': 'Jackie (I)', 'last_name': 'Chan', 'actor_id': 80684, 'gender': 'M', 'genre': 'Comedy', 'prob': 0.578947, 'movie_id': 52, 'role': 'Dragon Mi Yong', 'name': "'A' gai waak", 'year': 1983, 'rank': 7.2, 'movies_genre': 'Action'}
+
+df:
+          id  first_name last_name  actor_id gender      genre      prob  movie_id                  role                   name  year  rank movies_genre
+0      13407  Jackie (I)      Chan     80684      M     Action  0.894737        52        Dragon Mi Yong           'A' gai waak  1983   7.2       Action
+1      13407  Jackie (I)      Chan     80684      M     Action  0.894737        52        Dragon Mi Yong           'A' gai waak  1983   7.2       Comedy
+2      13407  Jackie (I)      Chan     80684      M  Adventure  0.157895        52        Dragon Mi Yong           'A' gai waak  1983   7.2       Action
+3      13407  Jackie (I)      Chan     80684      M  Adventure  0.157895        52        Dragon Mi Yong           'A' gai waak  1983   7.2       Comedy
+4      13407  Jackie (I)      Chan     80684      M     Comedy  0.578947        52        Dragon Mi Yong           'A' gai waak  1983   7.2       Action
+...      ...         ...       ...       ...    ...        ...       ...       ...                   ...                    ...   ...   ...          ...
+37192  78383     Jacques      Tati    467195      M      Short  0.285714    377662               Postman  cole des facteurs, L'  1947   7.7       Comedy
+37193  78383     Jacques      Tati    467195      M      Short  0.285714    377662               Postman  cole des facteurs, L'  1947   7.7        Short
+37194  54920  João César  Monteiro    327518      M     Comedy  0.400000    378456  Man Outside Bathroom      ltimo Mergulho, O  1992   6.4        Drama
+37195  54920  João César  Monteiro    327518      M      Drama  0.400000    378456  Man Outside Bathroom      ltimo Mergulho, O  1992   6.4        Drama
+37196  54920  João César  Monteiro    327518      M      Short  0.400000    378456  Man Outside Bathroom      ltimo Mergulho, O  1992   6.4        Drama
+
+[37197 rows x 13 columns]
+
+# Shuffled dataframe:
+       index     id  first_name  last_name  actor_id gender        genre      prob  movie_id                           role                          name  year  rank movies_genre
+0      29767   1364       Woody      Allen      8286      M        Drama  0.384615    304761                   Miles Monroe                       Sleeper  1973   7.4       Comedy
+1      20751  28582       Terry    Gilliam    173491      M      Romance  0.066667    209170  Fish #4/Walters/Zulu announce          Meaning of Life, The  1983   7.3      Fantasy
+2      22377  29002    Jean-Luc     Godard    175989      M       Comedy  0.126761    225492      Lang's Assistant Director                     Mpris, Le  1963   7.6        Drama
+3      28989  45592       Spike        Lee    272318      M        Crime  0.103448    298090                  Mars Blackmon           She's Gotta Have It  1986   6.3      Romance
+4      14294  20370        Walt     Disney    123607      M  Documentary  0.009091    140110                   Mickey Mouse                 Haunted House  1929   6.9       Horror
+...      ...    ...         ...        ...       ...    ...          ...       ...       ...                            ...                           ...   ...   ...          ...
+37192  35691  62480  Charles B.     Pierce    374202      M        Crime  0.181818    366081                                         Winds of Autumn, The  1976   4.7      Western
+37193  29909   1364       Woody      Allen      8286      M       Sci-Fi  0.025641    305390                    Ray Winkler             Small Time Crooks  2000   6.5        Crime
+37194  32841   1431       Pedro  Almodóvar      8728      M        Short  0.407407    334678  Voice saying 'Eva al desnudo'           Todo sobre mi madre  1999   7.9        Drama
+37195  28126  21517      Dennis      Dugan    130581      M     Thriller  0.111111    289113                        Referee              Saving Silverman  2001   5.4        Crime
+37196  33128  24515       Marco    Ferreri    149261      M  Documentary  0.068965    336738                   The reporter  Touche pas  la femme blanche  1974   4.6      Western
+
+[37197 rows x 14 columns]
+# Test - Train Sample:
+Train X:
+Int64Index([22933, 29928, 13201, 36131, 20730, 16648, 12102,  7569,  2107,
+            29419,
+            ...
+            23541,  3383,  4896, 20198, 29279,  7973, 22378,  2544, 19484,
+             1118],
+           dtype='int64', length=27897)
+Train y:
+22933     Action
+29928     Comedy
+13201      Short
+36131    Fantasy
+20730      Drama
+          ...   
+7973     Romance
+22378     Action
+2544      Action
+19484     Family
+1118       Drama
+Name: movies_genre, Length: 27897, dtype: object
+Test X:
+Int64Index([ 9274,  8406, 36155,  6633, 33910, 25681, 12743, 32849, 18867,
+             7630,
+            ...
+             3208,  9100, 36757,  7688,  2216,   228, 31344, 22347, 22063,
+             8287],
+           dtype='int64', length=9300)
+Test y:
+9274         Drama
+8406       Romance
+36155       Comedy
+6633      Thriller
+33910        Drama
+           ...    
+228         Comedy
+31344        Crime
+22347      Romance
+22063      Romance
+8287     Animation
+Name: movies_genre, Length: 9300, dtype: object
+# Current log number is: 12
+# Next log number is: 13
