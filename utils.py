@@ -222,7 +222,7 @@ def macro_precision(y_true, y_pred):
     precision = 0
 
     # loop over all classes
-    for class_ in list(y_true.unique()):
+    for class_ in list(np.unique(y_true)):
         # all classes except current are considered negative
         temp_true = [1 if p == class_ else 0 for p in y_true]
         temp_pred = [1 if p == class_ else 0 for p in y_pred]
@@ -253,7 +253,7 @@ def micro_precision(y_true, y_pred):
     fp = 0
 
     # loop over all classes
-    for class_ in y_true.unique():
+    for class_ in np.unique(y_true):
         # all classes except current are considered negative
         temp_true = [1 if p == class_ else 0 for p in y_true]
         temp_pred = [1 if p == class_ else 0 for p in y_pred]
