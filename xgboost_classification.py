@@ -103,7 +103,6 @@ if DEBUG:
     write_to_logs("\n# cat_cols: " + str(cat_cols) + "\n", log_number)
     write_to_logs("\n# num_cols: " + str(num_cols) + "\n", log_number)
 
-
 full_processor = ColumnTransformer(
     transformers=[
         ("numeric", numeric_pipeline, num_cols),
@@ -113,16 +112,24 @@ full_processor = ColumnTransformer(
 
 # Apply preprocessing
 X_processed = full_processor.fit_transform(X)
+
 y_processed = SimpleImputer(strategy="most_frequent").fit_transform(
     y.values.reshape(-1, 1)
 )
 
+# print(y_processed.reshape(1,-1))
 le = LabelEncoder()
-y_processed_ = le.fit_transform(y_processed)
+y_processed_ = le.fit_transform(y_processed.reshape(1, -1)[0])
 
+# print(y_processed_.reshape(-1,1))
 X_train, X_test, y_train, y_test = train_test_split(
-    X_processed, y_processed_, stratify=y_processed_, random_state=1121218
+    X_processed, y_processed_.reshape(-1, 1), stratify=y_processed_, random_state=1121218
 )
+
+# y_train = y_train.reshape(-1,1)
+# y_test = y_test.reshape(-1,1)
+# print(y_train.shape)
+
 
 if DEBUG:
     write_to_logs("\n# Test - Train Sample:", log_number)
@@ -136,6 +143,7 @@ if DEBUG:
 # Init classifier
 xgb_cl = XGBClassifier()
 
+# print(y_train)
 # Fit
 xgb_cl.fit(X_train, y_train)
 
@@ -155,4 +163,3 @@ next_log_number = read_config("config.txt", True)
 if DEBUG:
     write_to_logs("\n# Current log number is: " + str(log_number), log_number)
     write_to_logs("\n# Next log number is: " + str(next_log_number), log_number)
-
