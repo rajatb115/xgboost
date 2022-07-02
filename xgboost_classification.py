@@ -1,4 +1,5 @@
-from utils import read_config, write_to_logs, load_db_Config, create_db, getTable
+from utils import read_config, write_to_logs, load_db_Config, create_db, getTable, accuracy, true_negative
+from utils import true_positive, false_positive, false_negative, macro_precision, micro_precision
 import xgboost
 from sklearn.model_selection import train_test_split
 from xgboost import XGBClassifier
@@ -7,7 +8,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import StandardScaler
 from sklearn.compose import ColumnTransformer
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, precision_score, precision_recall_fscore_support
 from sklearn.preprocessing import LabelEncoder
 
 # parser contain all the configuration details
@@ -152,10 +153,82 @@ preds = xgb_cl.predict(X_test)
 
 # Score
 score = accuracy_score(y_test, preds)
-print(score)
+print("Accuracy @1 using sklearn library: " + str(score))
+
+acc = accuracy(y_test, preds)
+print("Accuracy: " + str(acc))
+
+tp = true_positive(y_test, preds)
+print("True Positive: " + str(tp))
+
+tn = true_negative(y_test, preds)
+print("True Negative: " + str(tn))
+
+fp = false_positive(y_test, preds)
+print("False Positive: " + str(fp))
+
+fn = false_negative(y_test, preds)
+print("False Negative: " + str(fn))
+
+macro_prec = precision_score(y_test, preds, average='macro')
+print("Macro-Averaged Precision using sklearn library : " + str(macro_prec))
+
+macro_prec_implement = macro_precision(y_test, preds)
+print("Macro-Averaged Precision: " + str(macro_prec_implement))
+
+micro_prec = precision_score(y_test, preds, average='micro')
+print("Micro-Averaged Precision using sklearn library : " + str(micro_prec))
+
+micro_prec_implement = micro_precision(y_test, preds)
+print("Micro-Averaged Precision: " + str(micro_prec_implement))
 
 if DEBUG:
-    write_to_logs("\n# SCORE: " + str(score), log_number)
+    write_to_logs("\nAccuracy @1 using sklearn library: " + str(score), log_number)
+    write_to_logs("\n# Accuracy @1: " + str(score), log_number)
+    write_to_logs("\n# True Positive: " + str(tp), log_number)
+    write_to_logs("\n# True Negative: " + str(tn), log_number)
+    write_to_logs("\n# False Positive: " + str(fp), log_number)
+    write_to_logs("\n# False Negative: " + str(fn), log_number)
+    write_to_logs("\n# Macro-Averaged Precision using sklearn library : " + str(macro_prec), log_number)
+    write_to_logs("\n# Macro-Averaged Precision: " + str(macro_prec_implement), log_number)
+    write_to_logs("\n# Micro-Averaged Precision using sklearn library : " + str(micro_prec), log_number)
+    write_to_logs("\n# Micro-Averaged Precision: " + str(micro_prec_implement), log_number)
+
+precision, recall, F1 = precision_recall_fscore_support(y_test, preds, beta=1.0, average='weighted')
+print("Weighted")
+print("Precision: " + str(precision))
+print("Recall: " + str(recall))
+print("F1 Score: " + str(F1))
+
+if DEBUG:
+    write_to_logs("\n# Weighted:", log_number)
+    write_to_logs("\nPrecision: " + str(precision), log_number)
+    write_to_logs("\nRecall: " + str(recall), log_number)
+    write_to_logs("\nF1 Score: " + str(F1), log_number)
+
+precision, recall, F1 = precision_recall_fscore_support(y_test, preds, beta=1.0, average='macro')
+print("macro")
+print("Precision: " + str(precision))
+print("Recall: " + str(recall))
+print("F1 Score: " + str(F1))
+
+if DEBUG:
+    write_to_logs("\n# macro:", log_number)
+    write_to_logs("\nPrecision: " + str(precision), log_number)
+    write_to_logs("\nRecall: " + str(recall), log_number)
+    write_to_logs("\nF1 Score: " + str(F1), log_number)
+
+precision, recall, F1 = precision_recall_fscore_support(y_test, preds, beta=1.0, average='micro')
+print("micro")
+print("Precision: " + str(precision))
+print("Recall: " + str(recall))
+print("F1 Score: " + str(F1))
+
+if DEBUG:
+    write_to_logs("\n# micro:", log_number)
+    write_to_logs("\nPrecision: " + str(precision), log_number)
+    write_to_logs("\nRecall: " + str(recall), log_number)
+    write_to_logs("\nF1 Score: " + str(F1), log_number)
 
 # ############# end main ############
 
