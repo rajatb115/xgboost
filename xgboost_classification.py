@@ -194,7 +194,7 @@ if DEBUG:
     write_to_logs("\n# Micro-Averaged Precision using sklearn library : " + str(micro_prec), log_number)
     write_to_logs("\n# Micro-Averaged Precision: " + str(micro_prec_implement), log_number)
 
-precision, recall, F1 = precision_recall_fscore_support(y_test, preds, beta=1.0, average='weighted')
+(precision, recall, F1, _) = precision_recall_fscore_support(y_test, preds, beta=1.0, average='weighted')
 print("Weighted")
 print("Precision: " + str(precision))
 print("Recall: " + str(recall))
@@ -206,7 +206,7 @@ if DEBUG:
     write_to_logs("\nRecall: " + str(recall), log_number)
     write_to_logs("\nF1 Score: " + str(F1), log_number)
 
-precision, recall, F1 = precision_recall_fscore_support(y_test, preds, beta=1.0, average='macro')
+(precision, recall, F1, _) = precision_recall_fscore_support(y_test, preds, beta=1.0, average='macro')
 print("macro")
 print("Precision: " + str(precision))
 print("Recall: " + str(recall))
@@ -218,7 +218,7 @@ if DEBUG:
     write_to_logs("\nRecall: " + str(recall), log_number)
     write_to_logs("\nF1 Score: " + str(F1), log_number)
 
-precision, recall, F1 = precision_recall_fscore_support(y_test, preds, beta=1.0, average='micro')
+(precision, recall, F1, _) = precision_recall_fscore_support(y_test, preds, beta=1.0, average='micro')
 print("micro")
 print("Precision: " + str(precision))
 print("Recall: " + str(recall))
