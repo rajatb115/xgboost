@@ -76,3 +76,208 @@ dtype: float64
       dtype='object')
 
 # num_cols: Index(['index'], dtype='object')
+# Printing config file data:
+debug: True
+log_files: tmp/log_cnt.txt
+sql_file: tmp/log_cnt.txt
+db_file: data/imdb.db
+
+# XGBoost Version: 1.6.1
+# Printing config file data for database:
+db_name: imdb
+tables_name: cdirectors, cactors, cdirectors_genres, cmovies_directors, croles, cmovies, cmovies_genres
+columns_header: cdirectors:id, cdirectors:first_name, cdirectors:last_name, cdirectors_genres:id, cdirectors_genres:genre, cdirectors_genres:prob, cmovies_directors:id, cmovies_directors:movie_id, cmovies:movie_id, cmovies:name, cmovies:year, cmovies:rank, cmovies_genres:movie_id, cmovies_genres:movies_genre, croles:actor_id, croles:movie_id, croles:role, cactors:actor_id, cactors:first_name, cactors:last_name, cactors:gender
+prediction column: cmovies_genres:movies_genre
+
+# Printing the sql query:
+qStmt: Select id, first_name, last_name, id, genre, prob, id, movie_id, movie_id, name, year, rank, movie_id, movies_genre, actor_id, movie_id, role, actor_id, first_name, last_name, gender from cdirectors natural join cactors natural join cdirectors_genres natural join cmovies_directors natural join croles natural join cmovies natural join cmovies_genres where rank != 'None'; 
+
+# Creating the database
+# Printing sql details
+db_file_path: data/imdb.db
+sql_file_path: data/imdb.sql
+# data/imdb.db file already exist
+
+# SQL table header:['id', 'first_name', 'last_name', 'id', 'genre', 'prob', 'id', 'movie_id', 'movie_id', 'name', 'year', 'rank', 'movie_id', 'movies_genre', 'actor_id', 'movie_id', 'role', 'actor_id', 'first_name', 'last_name', 'gender']
+# SQL table (first 5 rows):
+{'id': 13407, 'first_name': 'Jackie (I)', 'last_name': 'Chan', 'genre': 'Action', 'prob': 0.894737, 'movie_id': 52, 'name': "'A' gai waak", 'year': 1983, 'rank': 7.2, 'movies_genre': 'Action', 'actor_id': 80684, 'role': 'Dragon Mi Yong', 'gender': 'M'}
+{'id': 13407, 'first_name': 'Jackie (I)', 'last_name': 'Chan', 'genre': 'Action', 'prob': 0.894737, 'movie_id': 52, 'name': "'A' gai waak", 'year': 1983, 'rank': 7.2, 'movies_genre': 'Comedy', 'actor_id': 80684, 'role': 'Dragon Mi Yong', 'gender': 'M'}
+{'id': 13407, 'first_name': 'Jackie (I)', 'last_name': 'Chan', 'genre': 'Adventure', 'prob': 0.157895, 'movie_id': 52, 'name': "'A' gai waak", 'year': 1983, 'rank': 7.2, 'movies_genre': 'Action', 'actor_id': 80684, 'role': 'Dragon Mi Yong', 'gender': 'M'}
+{'id': 13407, 'first_name': 'Jackie (I)', 'last_name': 'Chan', 'genre': 'Adventure', 'prob': 0.157895, 'movie_id': 52, 'name': "'A' gai waak", 'year': 1983, 'rank': 7.2, 'movies_genre': 'Comedy', 'actor_id': 80684, 'role': 'Dragon Mi Yong', 'gender': 'M'}
+{'id': 13407, 'first_name': 'Jackie (I)', 'last_name': 'Chan', 'genre': 'Comedy', 'prob': 0.578947, 'movie_id': 52, 'name': "'A' gai waak", 'year': 1983, 'rank': 7.2, 'movies_genre': 'Action', 'actor_id': 80684, 'role': 'Dragon Mi Yong', 'gender': 'M'}
+
+df:
+          id  first_name last_name     id      genre      prob     id  movie_id  movie_id  ...  movie_id  movies_genre  actor_id  movie_id                  role  actor_id  first_name last_name  gender
+0      13407  Jackie (I)      Chan  13407     Action  0.894737  13407        52        52  ...        52        Action     80684        52        Dragon Mi Yong     80684  Jackie (I)      Chan       M
+1      13407  Jackie (I)      Chan  13407     Action  0.894737  13407        52        52  ...        52        Comedy     80684        52        Dragon Mi Yong     80684  Jackie (I)      Chan       M
+2      13407  Jackie (I)      Chan  13407  Adventure  0.157895  13407        52        52  ...        52        Action     80684        52        Dragon Mi Yong     80684  Jackie (I)      Chan       M
+3      13407  Jackie (I)      Chan  13407  Adventure  0.157895  13407        52        52  ...        52        Comedy     80684        52        Dragon Mi Yong     80684  Jackie (I)      Chan       M
+4      13407  Jackie (I)      Chan  13407     Comedy  0.578947  13407        52        52  ...        52        Action     80684        52        Dragon Mi Yong     80684  Jackie (I)      Chan       M
+...      ...         ...       ...    ...        ...       ...    ...       ...       ...  ...       ...           ...       ...       ...                   ...       ...         ...       ...     ...
+37192  78383     Jacques      Tati  78383      Short  0.285714  78383    377662    377662  ...    377662        Comedy    467195    377662               Postman    467195     Jacques      Tati       M
+37193  78383     Jacques      Tati  78383      Short  0.285714  78383    377662    377662  ...    377662         Short    467195    377662               Postman    467195     Jacques      Tati       M
+37194  54920  João César  Monteiro  54920     Comedy  0.400000  54920    378456    378456  ...    378456         Drama    327518    378456  Man Outside Bathroom    327518  João César  Monteiro       M
+37195  54920  João César  Monteiro  54920      Drama  0.400000  54920    378456    378456  ...    378456         Drama    327518    378456  Man Outside Bathroom    327518  João César  Monteiro       M
+37196  54920  João César  Monteiro  54920      Short  0.400000  54920    378456    378456  ...    378456         Drama    327518    378456  Man Outside Bathroom    327518  João César  Monteiro       M
+
+[37197 rows x 21 columns]
+#
+ missing_props: 
+id              0.0
+first_name      0.0
+last_name       0.0
+id              0.0
+genre           0.0
+prob            0.0
+id              0.0
+movie_id        0.0
+movie_id        0.0
+name            0.0
+year            0.0
+rank            0.0
+movie_id        0.0
+movies_genre    0.0
+actor_id        0.0
+movie_id        0.0
+role            0.0
+actor_id        0.0
+first_name      0.0
+last_name       0.0
+gender          0.0
+dtype: float64
+
+# Shuffled dataframe:
+       index     id first_name  last_name     id     genre      prob     id movie_id movie_id  ... rank movie_id  movies_genre  actor_id movie_id                           role  actor_id first_name  last_name gender
+0      10536  64848        Sam      Raimi  64848   Mystery  0.142857  64848   105380   105380  ...  7.3   105380       Fantasy    388153   105380   Hitchhiking Fisherman Voice     388153        Sam      Raimi      M
+1      13477  65051     Harold      Ramis  65051  Thriller  0.166667  65051   134672   134672  ...  7.9   134672        Comedy    388996   134672                    Neurologist    388996     Harold      Ramis      M
+2      18896  36147   John (I)     Huston  36147   Mystery  0.044444  36147   190034   190034  ...  6.6   190034       Western    219168   190034                  Grizzly Adams    219168   John (I)     Huston      M
+3      33896  80465   François   Truffaut  80465    Family  0.038462  80465   346441   346441  ...  6.6   346441         Drama    480232   346441                 Un journaliste    480232   François   Truffaut      M
+4       1492  18959    William       Dear  18959     Drama  0.250000  18959    16901    16901  ...  5.4    16901         Drama    115035    16901                Toronto Manager    115035    William       Dear      M
+...      ...    ...        ...        ...    ...       ...       ...    ...      ...      ...  ...  ...      ...           ...       ...      ...                            ...       ...        ...        ...    ...
+37192  28190  40188     Buster     Keaton  40188    Action  0.020833  40188   289521   289521  ...  8.4   289521        Comedy    242185   289521                       Farmhand    242185     Buster     Keaton      M
+37193  33530  48485  David (I)      Lynch  48485    Sci-Fi  0.052632  48485   342552   342552  ...  6.5   342552       Mystery    288306   342552  FBI Regional Bureau Chief Gor    288306  David (I)      Lynch      M
+37194  27960  36147   John (I)     Huston  36147    Horror  0.022222  36147   287017   287017  ...  8.0   287017         Short    219168   287017                       Narrator    219168   John (I)     Huston      M
+37195   8116   9298    Kenneth    Branagh   9298     Drama  0.400000   9298    80379    80379  ...  7.1    80379       Romance     54936    80379      Roman Strauss/Mike Church     54936    Kenneth    Branagh      M
+37196  35289  66659       Adam     Rifkin  66659    Comedy  0.750000  66659   361224   361224  ...  4.7   361224   Documentary    398934   361224                    Adam Rifkin    398934       Adam     Rifkin      M
+
+[37197 rows x 22 columns]
+# cat_cols: Index(['first_name', 'last_name', 'genre', 'name', 'role', 'first_name',
+       'last_name', 'gender'],
+      dtype='object')
+
+# num_cols: Index(['index', 'id', 'id', 'prob', 'id', 'movie_id', 'movie_id', 'year',
+       'rank', 'movie_id', 'actor_id', 'movie_id', 'actor_id'],
+      dtype='object')
+# Printing config file data:
+debug: True
+log_files: tmp/log_cnt.txt
+sql_file: tmp/log_cnt.txt
+db_file: data/imdb.db
+
+# XGBoost Version: 1.6.1
+# Printing config file data for database:
+db_name: imdb
+tables_name: cdirectors, cactors, cdirectors_genres, cmovies_directors, croles, cmovies, cmovies_genres
+columns_header: cdirectors:id, cdirectors:first_name, cdirectors:last_name, cdirectors_genres:id, cdirectors_genres:genre, cdirectors_genres:prob, cmovies_directors:id, cmovies_directors:movie_id, cmovies:movie_id, cmovies:name, cmovies:year, cmovies:rank, cmovies_genres:movie_id, cmovies_genres:movies_genre, croles:actor_id, croles:movie_id, croles:role, cactors:actor_id, cactors:first_name, cactors:last_name, cactors:gender
+prediction column: cmovies_genres:movies_genre
+
+# Printing the sql query:
+qStmt: Select cdirectors.id, cdirectors.first_name, cdirectors.last_name, cdirectors_genres.id, cdirectors_genres.genre, cdirectors_genres.prob, cmovies_directors.id, cmovies_directors.movie_id, cmovies.movie_id, cmovies.name, cmovies.year, cmovies.rank, cmovies_genres.movie_id, cmovies_genres.movies_genre, croles.actor_id, croles.movie_id, croles.role, cactors.actor_id, cactors.first_name, cactors.last_name, cactors.gender from cdirectors natural join cactors natural join cdirectors_genres natural join cmovies_directors natural join croles natural join cmovies natural join cmovies_genres where rank != 'None'; 
+
+# Creating the database
+# Printing sql details
+db_file_path: data/imdb.db
+sql_file_path: data/imdb.sql
+# data/imdb.db file already exist
+
+# SQL table header:['id', 'first_name', 'last_name', 'id', 'genre', 'prob', 'id', 'movie_id', 'movie_id', 'name', 'year', 'rank', 'movie_id', 'movies_genre', 'actor_id', 'movie_id', 'role', 'actor_id', 'first_name', 'last_name', 'gender']
+# SQL table (first 5 rows):
+{'id': 13407, 'first_name': 'Jackie (I)', 'last_name': 'Chan', 'genre': 'Action', 'prob': 0.894737, 'movie_id': 52, 'name': "'A' gai waak", 'year': 1983, 'rank': 7.2, 'movies_genre': 'Action', 'actor_id': 80684, 'role': 'Dragon Mi Yong', 'gender': 'M'}
+{'id': 13407, 'first_name': 'Jackie (I)', 'last_name': 'Chan', 'genre': 'Action', 'prob': 0.894737, 'movie_id': 52, 'name': "'A' gai waak", 'year': 1983, 'rank': 7.2, 'movies_genre': 'Comedy', 'actor_id': 80684, 'role': 'Dragon Mi Yong', 'gender': 'M'}
+{'id': 13407, 'first_name': 'Jackie (I)', 'last_name': 'Chan', 'genre': 'Adventure', 'prob': 0.157895, 'movie_id': 52, 'name': "'A' gai waak", 'year': 1983, 'rank': 7.2, 'movies_genre': 'Action', 'actor_id': 80684, 'role': 'Dragon Mi Yong', 'gender': 'M'}
+{'id': 13407, 'first_name': 'Jackie (I)', 'last_name': 'Chan', 'genre': 'Adventure', 'prob': 0.157895, 'movie_id': 52, 'name': "'A' gai waak", 'year': 1983, 'rank': 7.2, 'movies_genre': 'Comedy', 'actor_id': 80684, 'role': 'Dragon Mi Yong', 'gender': 'M'}
+{'id': 13407, 'first_name': 'Jackie (I)', 'last_name': 'Chan', 'genre': 'Comedy', 'prob': 0.578947, 'movie_id': 52, 'name': "'A' gai waak", 'year': 1983, 'rank': 7.2, 'movies_genre': 'Action', 'actor_id': 80684, 'role': 'Dragon Mi Yong', 'gender': 'M'}
+
+df:
+          id  first_name last_name     id      genre      prob     id  movie_id  movie_id  ...  movie_id  movies_genre  actor_id  movie_id                  role  actor_id  first_name last_name  gender
+0      13407  Jackie (I)      Chan  13407     Action  0.894737  13407        52        52  ...        52        Action     80684        52        Dragon Mi Yong     80684  Jackie (I)      Chan       M
+1      13407  Jackie (I)      Chan  13407     Action  0.894737  13407        52        52  ...        52        Comedy     80684        52        Dragon Mi Yong     80684  Jackie (I)      Chan       M
+2      13407  Jackie (I)      Chan  13407  Adventure  0.157895  13407        52        52  ...        52        Action     80684        52        Dragon Mi Yong     80684  Jackie (I)      Chan       M
+3      13407  Jackie (I)      Chan  13407  Adventure  0.157895  13407        52        52  ...        52        Comedy     80684        52        Dragon Mi Yong     80684  Jackie (I)      Chan       M
+4      13407  Jackie (I)      Chan  13407     Comedy  0.578947  13407        52        52  ...        52        Action     80684        52        Dragon Mi Yong     80684  Jackie (I)      Chan       M
+...      ...         ...       ...    ...        ...       ...    ...       ...       ...  ...       ...           ...       ...       ...                   ...       ...         ...       ...     ...
+37192  78383     Jacques      Tati  78383      Short  0.285714  78383    377662    377662  ...    377662        Comedy    467195    377662               Postman    467195     Jacques      Tati       M
+37193  78383     Jacques      Tati  78383      Short  0.285714  78383    377662    377662  ...    377662         Short    467195    377662               Postman    467195     Jacques      Tati       M
+37194  54920  João César  Monteiro  54920     Comedy  0.400000  54920    378456    378456  ...    378456         Drama    327518    378456  Man Outside Bathroom    327518  João César  Monteiro       M
+37195  54920  João César  Monteiro  54920      Drama  0.400000  54920    378456    378456  ...    378456         Drama    327518    378456  Man Outside Bathroom    327518  João César  Monteiro       M
+37196  54920  João César  Monteiro  54920      Short  0.400000  54920    378456    378456  ...    378456         Drama    327518    378456  Man Outside Bathroom    327518  João César  Monteiro       M
+
+[37197 rows x 21 columns]
+#
+ missing_props: 
+id              0.0
+first_name      0.0
+last_name       0.0
+id              0.0
+genre           0.0
+prob            0.0
+id              0.0
+movie_id        0.0
+movie_id        0.0
+name            0.0
+year            0.0
+rank            0.0
+movie_id        0.0
+movies_genre    0.0
+actor_id        0.0
+movie_id        0.0
+role            0.0
+actor_id        0.0
+first_name      0.0
+last_name       0.0
+gender          0.0
+dtype: float64
+
+# Shuffled dataframe:
+       index     id first_name  last_name     id    genre      prob     id movie_id movie_id  ... rank movie_id  movies_genre  actor_id movie_id                           role  actor_id first_name  last_name gender
+0       6392  84880      Orson     Welles  84880    Crime  0.068965  84880    64729    64729  ...  8.7    64729       Mystery    506139    64729            Charles Foster Kane    506139      Orson     Welles      M
+1      13032  20757    Richard     Donner  20757  Fantasy  0.142857  20757   131885   131885  ...  7.1   131885        Comedy    126187   131885                      Policeman    126187    Richard     Donner      M
+2      29817  25441      Bryan     Forbes  25441   Family  0.062500  25441   305036   305036  ...  6.2   305036     Adventure    155014   305036                         Herald    155014      Bryan     Forbes      M
+3       8953  86439   John (I)        Woo  86439    Short  0.081081  86439    86315    86315  ...  7.5    86315         Drama    516332    86315               Police inspector    516332   John (I)        Woo      M
+4      27188  41526     Cédric   Klapisch  41526    Short  0.307692  41526   278155   278155  ...  6.2   278155        Comedy    250330   278155           L'homme au caméscope    250330     Cédric   Klapisch      M
+...      ...    ...        ...        ...    ...      ...       ...    ...      ...      ...  ...  ...      ...           ...       ...      ...                            ...       ...        ...        ...    ...
+37192  10504  64848        Sam      Raimi  64848  Romance  0.071429  64848   105379   105379  ...  7.6   105379       Fantasy    388153   105379               Medieval Soldier    388153        Sam      Raimi      M
+37193  27272   6403       Luca  Bercovici   6403    Music  0.125000   6403   280263   280263  ...  4.1   280263        Horror     38094   280263               Pirate Chieftain     38094       Luca  Bercovici      M
+37194  22306  40188     Buster     Keaton  40188      War  0.020833  40188   224418   224418  ...  6.9   224418        Comedy    242185   224418                    The Husband    242185     Buster     Keaton      M
+37195  35398   1364      Woody      Allen   1364    Short  0.051282   1364   362558   362558  ...  6.4   362558     Adventure      8286   362558  Himself/Dub Voice/Projectioni      8286      Woody      Allen      M
+37196  22142  60019      Frank         Oz  60019   Family  0.333333  60019   222495   222495  ...  6.4   222495        Family    358527   222495  Miss Piggy/Fozzie/Animal/Sam     358527      Frank         Oz      M
+
+[37197 rows x 22 columns]
+# cat_cols: Index(['first_name', 'last_name', 'genre', 'name', 'role', 'first_name',
+       'last_name', 'gender'],
+      dtype='object')
+
+# num_cols: Index(['index', 'id', 'id', 'prob', 'id', 'movie_id', 'movie_id', 'year',
+       'rank', 'movie_id', 'actor_id', 'movie_id', 'actor_id'],
+      dtype='object')
+# Printing config file data:
+debug: True
+log_files: tmp/log_cnt.txt
+sql_file: tmp/log_cnt.txt
+db_file: data/imdb.db
+
+# XGBoost Version: 1.6.1
+# Printing config file data for database:
+db_name: imdb
+tables_name: cdirectors, cactors, cdirectors_genres, cmovies_directors, croles, cmovies, cmovies_genres
+columns_header: cdirectors:id, cdirectors:first_name, cdirectors:last_name, cdirectors_genres:genre, cdirectors_genres:prob, cmovies:movie_id, cmovies:name, cmovies:year, cmovies:rank, cmovies_genres:movies_genre, croles:actor_id, croles:role, cactors:first_name, cactors:last_name, cactors:gender
+prediction column: cmovies_genres:movies_genre
+
+# Printing the sql query:
+qStmt: Select cdirectors:id, cdirectors:first_name, cdirectors:last_name, cdirectors_genres:genre, cdirectors_genres:prob, cmovies:movie_id, cmovies:name, cmovies:year, cmovies:rank, cmovies_genres:movies_genre, croles:actor_id, croles:role, cactors:first_name, cactors:last_name, cactors:gender from cdirectors natural join cactors natural join cdirectors_genres natural join cmovies_directors natural join croles natural join cmovies natural join cmovies_genres where rank != 'None'; 
+
+# Creating the database
+# Printing sql details
+db_file_path: data/imdb.db
+sql_file_path: data/imdb.sql
+# data/imdb.db file already exist

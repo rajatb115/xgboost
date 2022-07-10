@@ -13,7 +13,7 @@ from sklearn.preprocessing import LabelEncoder
 
 # parser contain all the configuration details
 # log_number is the current log dump file number
-parser, log_number = read_config("config_mimic.txt", False)
+parser, log_number = read_config("config_imdb.txt", False)
 
 # for debugging
 DEBUG = False
@@ -28,18 +28,21 @@ if DEBUG:
 # dbName : contain the name of the database
 # tableList : list of all the tables in the database(dbName)
 # columnHeaderDict : dictionary of tables and its column names. {table1 : [col1, col2,..], table2 : [...], ...}
-dbName, tableList, columnHeaderDict = load_db_Config(parser, log_number)
+dbName, tableList, columnNames = load_db_Config(parser, log_number)
 
 # Generating sql query
 qStmt = "Select "
 
 # Selecting the required columns
-for i in columnHeaderDict.keys():
-    for col_val in columnHeaderDict[i]:
-        qStmt += str(col_val) + ", "
+if parser['db']['db_name'] == 'imdb':
+    qStmt += "* "
 
-# removing the last ", "
-qStmt = qStmt[:qStmt.rfind(',')]
+elif parser['db']['db_name'] == 'mimic':
+    for i in columnNames:
+        qStmt += str(i).replace(':', '.') + ", "
+
+    # removing the last ", "
+    qStmt = qStmt[:qStmt.rfind(',')]
 
 qStmt += " from "
 
@@ -52,7 +55,7 @@ qStmt = qStmt[:qStmt.rfind('natural join ')]
 # Adding a condition to the qStmt
 if parser['db']['db_name'] == 'imdb':
     qStmt += "where rank != 'None'; "
-else:
+elif parser['db']['db_name'] == 'mimic':
     qStmt += ";"
 
 if DEBUG:

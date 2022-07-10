@@ -61,20 +61,13 @@ def read_config(config_path, update):
 def load_db_Config(parser, log_number):
     dbName = parser['db']['db_name'].strip()
     tableList = []
-    columnDict = {}
+    columnNames = []
 
     for table_name in (parser['db']['tables_name']).strip().split(","):
         tableList.append(table_name.strip())
 
     for col in (parser['db']['columns_header']).strip().split(","):
-        colSplit = col.strip().split(":")
-        tabName = colSplit[0]
-        colName = colSplit[1]
-
-        if tabName not in columnDict:
-            columnDict[tabName] = []
-
-        columnDict[tabName].append(colName)
+        columnNames.append(col.strip())
 
     # Debug
     if str(parser['config']['debug']) == "True":
@@ -90,7 +83,7 @@ def load_db_Config(parser, log_number):
 
         log_info.close()
 
-    return dbName, tableList, columnDict
+    return dbName, tableList, columnNames
 
 
 def create_db(sql_file, db_file, log_number, DEBUG=False):
@@ -123,6 +116,7 @@ def create_db(sql_file, db_file, log_number, DEBUG=False):
 
 # To get the joint results
 def getTable(tmp_qStmt, db_path):
+
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
