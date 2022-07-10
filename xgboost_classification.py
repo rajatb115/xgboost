@@ -13,7 +13,7 @@ from sklearn.preprocessing import LabelEncoder
 
 # parser contain all the configuration details
 # log_number is the current log dump file number
-parser, log_number = read_config("config.txt", False)
+parser, log_number = read_config("config_mimic.txt", False)
 
 # for debugging
 DEBUG = False
@@ -31,15 +31,29 @@ if DEBUG:
 dbName, tableList, columnHeaderDict = load_db_Config(parser, log_number)
 
 # Generating sql query
-qStmt = "Select * from "
+qStmt = "Select "
+
+# Selecting the required columns
+for i in columnHeaderDict.keys():
+    for col_val in columnHeaderDict[i]:
+        qStmt += str(col_val) + ", "
+
+# removing the last ", "
+qStmt = qStmt[:qStmt.rfind(',')]
+
+qStmt += " from "
 
 for tab in tableList:
     qStmt += tab + ' natural join '
 
 # Removing the postfix ( "natural join" ) from qStmt
 qStmt = qStmt[:qStmt.rfind('natural join ')]
+
 # Adding a condition to the qStmt
-qStmt += "where rank != 'None'; "
+if parser['db']['db_name'] == 'imdb':
+    qStmt += "where rank != 'None'; "
+else:
+    qStmt += ";"
 
 if DEBUG:
     write_to_logs("# Printing the sql query:\n", log_number)
@@ -69,10 +83,13 @@ if DEBUG:
     write_to_logs(str(df), log_number)
     write_to_logs("\n", log_number)
 
-# Finding the missing cell percentage in each column
-# no need to find the missing value as there is no missing value in this dataset.
-# missing_props = df.isna().mean(axis=0)
-# print(missing_props)
+if DEBUG:
+    # Finding the missing cell percentage in each column
+    # no need to find the missing value as there is no missing value in this dataset.
+    missing_props = df.isna().mean(axis=0)
+    print(missing_props)
+
+    write_to_logs("#\n missing_props: \n" + str(missing_props) + "\n", log_number)
 
 # Shuffling the dataframe
 shuffled = df.sample(frac=1).reset_index()
@@ -82,8 +99,11 @@ if DEBUG:
     write_to_logs("\n" + str(shuffled), log_number)
 
 # separating the feature and the target
-X = shuffled.drop("movies_genre", axis=1)
-y = shuffled.movies_genre
+prediction_col = parser['db']['prediction'].strip().split(":")[1]
+
+X = shuffled.drop(prediction_col, axis=1)
+y = shuffled[prediction_col]
+
 
 categorical_pipeline = Pipeline(
     steps=[
@@ -232,7 +252,7 @@ if DEBUG:
 
 # ############# end main ############
 
-next_log_number = read_config("config.txt", True)
+next_log_number = read_config("config_imdb.txt", True)
 if DEBUG:
     write_to_logs("\n# Current log number is: " + str(log_number), log_number)
     write_to_logs("\n# Next log number is: " + str(next_log_number), log_number)

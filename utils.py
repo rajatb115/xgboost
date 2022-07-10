@@ -51,6 +51,8 @@ def read_config(config_path, update):
         write_to_logs("# Printing config file data:\n", log_number)
         write_to_logs("debug: " + str(parser['config']['debug']) + "\n", log_number)
         write_to_logs("log_files: " + str(parser['files']['log_cnt']) + "\n", log_number)
+        write_to_logs("sql_file: " + str(parser['files']['log_cnt']) + "\n", log_number)
+        write_to_logs("db_file: " + str(parser['files']['db_file']) + "\n", log_number)
 
     return parser, log_number
 
@@ -83,6 +85,7 @@ def load_db_Config(parser, log_number):
         log_info.write("db_name: " + str(parser['db']['db_name']) + "\n")
         log_info.write("tables_name: " + str(parser['db']['tables_name']) + "\n")
         log_info.write("columns_header: " + str(parser['db']['columns_header']) + "\n")
+        log_info.write("prediction column: " + str(parser['db']['prediction']) + "\n")
         log_info.write("\n")
 
         log_info.close()

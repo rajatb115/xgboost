@@ -1,213 +1,78 @@
 # Printing config file data:
 debug: True
 log_files: tmp/log_cnt.txt
+sql_file: tmp/log_cnt.txt
+db_file: data/mimic.db
 
 # XGBoost Version: 1.6.1
 # Printing config file data for database:
-db_name: imdb
-tables_name: cdirectors, cactors, cdirectors_genres, cmovies_directors, croles, cmovies, cmovies_genres
-columns_header: cdirectors:id, cdirectors:first_name, cdirectors:last_name, cdirectors_genres:id, cdirectors_genres:genre, cdirectors_genres:prob, cmovies_directors:id, cmovies_directors:movie_id, cmovies:movie_id, cmovies:name, cmovies:year, cmovies:rank, cmovies_genres:movie_id, cmovies_genres:movies_genre, croles:actor_id, croles:movie_id, croles:role, cactors:actor_id, cactors:first_name, cactors:last_name, cactors:gender
+db_name: mimic
+tables_name: admissions
+columns_header: admissions:ADMISSION_TYPE, admissions:DISCHARGE_LOCATION, admissions:INSURANCE, admissions:LANGUAGE, admissions:RELIGION, admissions:MARITAL_STATUS, admissions:ETHNICITY, admissions:EDREGTIME, admissions:EDOUTTIME
+prediction column: admissions:INSURANCE
 
 # Printing the sql query:
-qStmt: Select * from cdirectors natural join cactors natural join cdirectors_genres natural join cmovies_directors natural join croles natural join cmovies natural join cmovies_genres where rank != 'None'; 
+qStmt: Select ADMISSION_TYPE, DISCHARGE_LOCATION, INSURANCE, LANGUAGE, RELIGION, MARITAL_STATUS, ETHNICITY, EDREGTIME, EDOUTTIME from admissions ;
 
 # Creating the database
 # Printing sql details
-db_file_path: data/imdb.db
-sql_file_path: data/imdb.sql
-# data/imdb.db file already exist
+db_file_path: data/mimic.db
+sql_file_path: data/mimic.sql
+# data/mimic.db file already exist
 
-# SQL table header:['id', 'first_name', 'last_name', 'actor_id', 'gender', 'genre', 'prob', 'movie_id', 'role', 'name', 'year', 'rank', 'movies_genre']
+# SQL table header:['ADMISSION_TYPE', 'DISCHARGE_LOCATION', 'INSURANCE', 'LANGUAGE', 'RELIGION', 'MARITAL_STATUS', 'ETHNICITY', 'EDREGTIME', 'EDOUTTIME']
 # SQL table (first 5 rows):
-{'id': 13407, 'first_name': 'Jackie (I)', 'last_name': 'Chan', 'actor_id': 80684, 'gender': 'M', 'genre': 'Action', 'prob': 0.894737, 'movie_id': 52, 'role': 'Dragon Mi Yong', 'name': "'A' gai waak", 'year': 1983, 'rank': 7.2, 'movies_genre': 'Action'}
-{'id': 13407, 'first_name': 'Jackie (I)', 'last_name': 'Chan', 'actor_id': 80684, 'gender': 'M', 'genre': 'Action', 'prob': 0.894737, 'movie_id': 52, 'role': 'Dragon Mi Yong', 'name': "'A' gai waak", 'year': 1983, 'rank': 7.2, 'movies_genre': 'Comedy'}
-{'id': 13407, 'first_name': 'Jackie (I)', 'last_name': 'Chan', 'actor_id': 80684, 'gender': 'M', 'genre': 'Adventure', 'prob': 0.157895, 'movie_id': 52, 'role': 'Dragon Mi Yong', 'name': "'A' gai waak", 'year': 1983, 'rank': 7.2, 'movies_genre': 'Action'}
-{'id': 13407, 'first_name': 'Jackie (I)', 'last_name': 'Chan', 'actor_id': 80684, 'gender': 'M', 'genre': 'Adventure', 'prob': 0.157895, 'movie_id': 52, 'role': 'Dragon Mi Yong', 'name': "'A' gai waak", 'year': 1983, 'rank': 7.2, 'movies_genre': 'Comedy'}
-{'id': 13407, 'first_name': 'Jackie (I)', 'last_name': 'Chan', 'actor_id': 80684, 'gender': 'M', 'genre': 'Comedy', 'prob': 0.578947, 'movie_id': 52, 'role': 'Dragon Mi Yong', 'name': "'A' gai waak", 'year': 1983, 'rank': 7.2, 'movies_genre': 'Action'}
+{'ADMISSION_TYPE': 'EMERGENCY', 'DISCHARGE_LOCATION': 'DISC-TRAN CANCER/CHLDRN H', 'INSURANCE': 'Private', 'LANGUAGE': '', 'RELIGION': 'UNOBTAINABLE', 'MARITAL_STATUS': 'MARRIED', 'ETHNICITY': 'WHITE', 'EDREGTIME': '2196-04-09 10:06:00', 'EDOUTTIME': '2196-04-09 13:24:00'}
+{'ADMISSION_TYPE': 'ELECTIVE', 'DISCHARGE_LOCATION': 'HOME HEALTH CARE', 'INSURANCE': 'Medicare', 'LANGUAGE': '', 'RELIGION': 'CATHOLIC', 'MARITAL_STATUS': 'MARRIED', 'ETHNICITY': 'WHITE', 'EDREGTIME': '', 'EDOUTTIME': ''}
+{'ADMISSION_TYPE': 'EMERGENCY', 'DISCHARGE_LOCATION': 'HOME HEALTH CARE', 'INSURANCE': 'Medicare', 'LANGUAGE': 'ENGL', 'RELIGION': 'CATHOLIC', 'MARITAL_STATUS': 'MARRIED', 'ETHNICITY': 'WHITE', 'EDREGTIME': '', 'EDOUTTIME': ''}
+{'ADMISSION_TYPE': 'EMERGENCY', 'DISCHARGE_LOCATION': 'HOME', 'INSURANCE': 'Private', 'LANGUAGE': '', 'RELIGION': 'PROTESTANT QUAKER', 'MARITAL_STATUS': 'SINGLE', 'ETHNICITY': 'WHITE', 'EDREGTIME': '', 'EDOUTTIME': ''}
+{'ADMISSION_TYPE': 'EMERGENCY', 'DISCHARGE_LOCATION': 'HOME', 'INSURANCE': 'Private', 'LANGUAGE': '', 'RELIGION': 'UNOBTAINABLE', 'MARITAL_STATUS': 'MARRIED', 'ETHNICITY': 'WHITE', 'EDREGTIME': '2160-11-02 01:01:00', 'EDOUTTIME': '2160-11-02 04:27:00'}
 
 df:
-          id  first_name last_name  actor_id gender      genre      prob  movie_id                  role                   name  year  rank movies_genre
-0      13407  Jackie (I)      Chan     80684      M     Action  0.894737        52        Dragon Mi Yong           'A' gai waak  1983   7.2       Action
-1      13407  Jackie (I)      Chan     80684      M     Action  0.894737        52        Dragon Mi Yong           'A' gai waak  1983   7.2       Comedy
-2      13407  Jackie (I)      Chan     80684      M  Adventure  0.157895        52        Dragon Mi Yong           'A' gai waak  1983   7.2       Action
-3      13407  Jackie (I)      Chan     80684      M  Adventure  0.157895        52        Dragon Mi Yong           'A' gai waak  1983   7.2       Comedy
-4      13407  Jackie (I)      Chan     80684      M     Comedy  0.578947        52        Dragon Mi Yong           'A' gai waak  1983   7.2       Action
-...      ...         ...       ...       ...    ...        ...       ...       ...                   ...                    ...   ...   ...          ...
-37192  78383     Jacques      Tati    467195      M      Short  0.285714    377662               Postman  cole des facteurs, L'  1947   7.7       Comedy
-37193  78383     Jacques      Tati    467195      M      Short  0.285714    377662               Postman  cole des facteurs, L'  1947   7.7        Short
-37194  54920  João César  Monteiro    327518      M     Comedy  0.400000    378456  Man Outside Bathroom      ltimo Mergulho, O  1992   6.4        Drama
-37195  54920  João César  Monteiro    327518      M      Drama  0.400000    378456  Man Outside Bathroom      ltimo Mergulho, O  1992   6.4        Drama
-37196  54920  João César  Monteiro    327518      M      Short  0.400000    378456  Man Outside Bathroom      ltimo Mergulho, O  1992   6.4        Drama
+      ADMISSION_TYPE         DISCHARGE_LOCATION INSURANCE LANGUAGE           RELIGION MARITAL_STATUS ETHNICITY            EDREGTIME            EDOUTTIME
+0          EMERGENCY  DISC-TRAN CANCER/CHLDRN H   Private                UNOBTAINABLE        MARRIED     WHITE  2196-04-09 10:06:00  2196-04-09 13:24:00
+1           ELECTIVE           HOME HEALTH CARE  Medicare                    CATHOLIC        MARRIED     WHITE                                          
+2          EMERGENCY           HOME HEALTH CARE  Medicare     ENGL           CATHOLIC        MARRIED     WHITE                                          
+3          EMERGENCY                       HOME   Private           PROTESTANT QUAKER         SINGLE     WHITE                                          
+4          EMERGENCY                       HOME   Private                UNOBTAINABLE        MARRIED     WHITE  2160-11-02 01:01:00  2160-11-02 04:27:00
+...              ...                        ...       ...      ...                ...            ...       ...                  ...                  ...
+58971      EMERGENCY                       HOME   Private     ENGL      NOT SPECIFIED         SINGLE     WHITE  2131-03-30 19:44:00  2131-03-30 22:41:00
+58972      EMERGENCY               DEAD/EXPIRED  Medicare     ENGL           CATHOLIC        WIDOWED     WHITE  2151-03-05 17:23:00  2151-03-05 21:06:00
+58973       ELECTIVE           HOME HEALTH CARE   Private     ENGL      NOT SPECIFIED        MARRIED     WHITE                                          
+58974      EMERGENCY                        SNF   Private     ENGL           CATHOLIC        MARRIED     WHITE  2128-11-10 23:48:00  2128-11-11 03:16:00
+58975      EMERGENCY                       HOME   Private     ENGL           CATHOLIC        MARRIED     WHITE  2131-10-25 00:08:00  2131-10-25 04:35:00
 
-[37197 rows x 13 columns]
-
-# Shuffled dataframe:
-       index     id  first_name    last_name  actor_id gender        genre      prob  movie_id                           role                       name  year  rank movies_genre
-0      26671  54920  João César     Monteiro    327518      M        Short  0.400000    273910                   João de Deus  Recordaes da Casa Amarela  1989   6.2        Drama
-1      36000  35973       Sammo  Hung Kam-Bo    218082      M      Fantasy  0.166667    369041                         Teapot                 Wu fu xing  1983   6.3       Comedy
-2      30461  34658  Alfred (I)    Hitchcock    209748      M        Short  0.080645    310843           Man leaving elevator                 Spellbound  1945   7.6        Drama
-3      12785  45592       Spike          Lee    272318      M       Action  0.034483    128089                          Jimmy                     Girl 6  1996   5.1       Comedy
-4      33207  13549     Charles      Chaplin     81396      M        Short  0.767123    337938                          Tramp                 Tramp, The  1915   7.3        Short
-...      ...    ...         ...          ...       ...    ...          ...       ...       ...                            ...                        ...   ...   ...          ...
-37192  21859  34658  Alfred (I)    Hitchcock    209748      M        Music  0.016129    220779  Man passing David Smith on st           Mr. & Mrs. Smith  1941   6.4       Comedy
-37193   9594  80200        Joey     Travolta    478675      M        Drama  0.363636     95102                           Geno         Dumb Luck in Vegas  1997   1.7       Action
-37194  19849  48485   David (I)        Lynch    288306      M        Short  0.263158    197394                        Himself        Lumire et compagnie  1995   7.1  Documentary
-37195  32737  80465    François     Truffaut    480232      M       Sci-Fi  0.038462    333720                     Le taulard           Tire-au-flanc 62  1960   6.7       Comedy
-37196  16180  59464    Yoko (I)          Ono    743281      F  Documentary  0.272727    156864                                                   Imagine  1973   7.0  Documentary
-
-[37197 rows x 14 columns]
-# cat_cols: Index(['first_name', 'last_name', 'gender', 'genre', 'role', 'name'], dtype='object')
-
-# num_cols: Index(['index', 'id', 'actor_id', 'prob', 'movie_id', 'year', 'rank'], dtype='object')
-
-# Test - Train Sample:
-Train X:
-[[-0.54880638 -1.11822082 -1.11230634 ...  0.          0.
-   0.        ]
- [ 0.78116204  1.08638495  1.04070471 ...  0.          0.
-   0.        ]
- [-1.69195898 -0.22106527 -0.22015605 ...  0.          0.
-   0.        ]
- ...
- [-0.58559214  1.12815886  1.07319068 ...  0.          0.
-   0.        ]
- [ 1.06529716 -0.51668417 -0.51124326 ...  0.          0.
-   0.        ]
- [-1.64092455  0.90810329  0.86546585 ...  0.          0.
-   0.        ]]
-Train y:
-[[ 3]
- [ 6]
- [15]
- ...
- [ 4]
- [ 6]
- [ 6]]
-Test X:
-[[ 0.62247104  1.31635362  1.25825542 ...  0.          0.
-   0.        ]
- [-1.44786912  0.37846561  0.33987543 ...  0.          0.
-   0.        ]
- [ 1.5650248  -1.58274828 -1.56890112 ...  0.          0.
-   0.        ]
- ...
- [ 1.6270484   1.2137896   1.15464843 ...  0.          0.
-   0.        ]
- [-1.50607445 -1.50008762 -1.48914619 ...  0.          0.
-   0.        ]
- [-0.43835595 -1.22714929 -1.22233359 ...  0.          0.
-   0.        ]]
-Test y:
-[[ 0]
- [ 4]
- [ 3]
- ...
- [17]
- [16]
- [ 4]]# Printing config file data:
-debug: True
-log_files: tmp/log_cnt.txt
-
-# XGBoost Version: 1.6.1
-# Printing config file data for database:
-db_name: imdb
-tables_name: cdirectors, cactors, cdirectors_genres, cmovies_directors, croles, cmovies, cmovies_genres
-columns_header: cdirectors:id, cdirectors:first_name, cdirectors:last_name, cdirectors_genres:id, cdirectors_genres:genre, cdirectors_genres:prob, cmovies_directors:id, cmovies_directors:movie_id, cmovies:movie_id, cmovies:name, cmovies:year, cmovies:rank, cmovies_genres:movie_id, cmovies_genres:movies_genre, croles:actor_id, croles:movie_id, croles:role, cactors:actor_id, cactors:first_name, cactors:last_name, cactors:gender
-
-# Printing the sql query:
-qStmt: Select * from cdirectors natural join cactors natural join cdirectors_genres natural join cmovies_directors natural join croles natural join cmovies natural join cmovies_genres where rank != 'None'; 
-
-# Creating the database
-# Printing sql details
-db_file_path: data/imdb.db
-sql_file_path: data/imdb.sql
-# data/imdb.db file already exist
-
-# SQL table header:['id', 'first_name', 'last_name', 'actor_id', 'gender', 'genre', 'prob', 'movie_id', 'role', 'name', 'year', 'rank', 'movies_genre']
-# SQL table (first 5 rows):
-{'id': 13407, 'first_name': 'Jackie (I)', 'last_name': 'Chan', 'actor_id': 80684, 'gender': 'M', 'genre': 'Action', 'prob': 0.894737, 'movie_id': 52, 'role': 'Dragon Mi Yong', 'name': "'A' gai waak", 'year': 1983, 'rank': 7.2, 'movies_genre': 'Action'}
-{'id': 13407, 'first_name': 'Jackie (I)', 'last_name': 'Chan', 'actor_id': 80684, 'gender': 'M', 'genre': 'Action', 'prob': 0.894737, 'movie_id': 52, 'role': 'Dragon Mi Yong', 'name': "'A' gai waak", 'year': 1983, 'rank': 7.2, 'movies_genre': 'Comedy'}
-{'id': 13407, 'first_name': 'Jackie (I)', 'last_name': 'Chan', 'actor_id': 80684, 'gender': 'M', 'genre': 'Adventure', 'prob': 0.157895, 'movie_id': 52, 'role': 'Dragon Mi Yong', 'name': "'A' gai waak", 'year': 1983, 'rank': 7.2, 'movies_genre': 'Action'}
-{'id': 13407, 'first_name': 'Jackie (I)', 'last_name': 'Chan', 'actor_id': 80684, 'gender': 'M', 'genre': 'Adventure', 'prob': 0.157895, 'movie_id': 52, 'role': 'Dragon Mi Yong', 'name': "'A' gai waak", 'year': 1983, 'rank': 7.2, 'movies_genre': 'Comedy'}
-{'id': 13407, 'first_name': 'Jackie (I)', 'last_name': 'Chan', 'actor_id': 80684, 'gender': 'M', 'genre': 'Comedy', 'prob': 0.578947, 'movie_id': 52, 'role': 'Dragon Mi Yong', 'name': "'A' gai waak", 'year': 1983, 'rank': 7.2, 'movies_genre': 'Action'}
-
-df:
-          id  first_name last_name  actor_id gender      genre      prob  movie_id                  role                   name  year  rank movies_genre
-0      13407  Jackie (I)      Chan     80684      M     Action  0.894737        52        Dragon Mi Yong           'A' gai waak  1983   7.2       Action
-1      13407  Jackie (I)      Chan     80684      M     Action  0.894737        52        Dragon Mi Yong           'A' gai waak  1983   7.2       Comedy
-2      13407  Jackie (I)      Chan     80684      M  Adventure  0.157895        52        Dragon Mi Yong           'A' gai waak  1983   7.2       Action
-3      13407  Jackie (I)      Chan     80684      M  Adventure  0.157895        52        Dragon Mi Yong           'A' gai waak  1983   7.2       Comedy
-4      13407  Jackie (I)      Chan     80684      M     Comedy  0.578947        52        Dragon Mi Yong           'A' gai waak  1983   7.2       Action
-...      ...         ...       ...       ...    ...        ...       ...       ...                   ...                    ...   ...   ...          ...
-37192  78383     Jacques      Tati    467195      M      Short  0.285714    377662               Postman  cole des facteurs, L'  1947   7.7       Comedy
-37193  78383     Jacques      Tati    467195      M      Short  0.285714    377662               Postman  cole des facteurs, L'  1947   7.7        Short
-37194  54920  João César  Monteiro    327518      M     Comedy  0.400000    378456  Man Outside Bathroom      ltimo Mergulho, O  1992   6.4        Drama
-37195  54920  João César  Monteiro    327518      M      Drama  0.400000    378456  Man Outside Bathroom      ltimo Mergulho, O  1992   6.4        Drama
-37196  54920  João César  Monteiro    327518      M      Short  0.400000    378456  Man Outside Bathroom      ltimo Mergulho, O  1992   6.4        Drama
-
-[37197 rows x 13 columns]
+[58976 rows x 9 columns]
+#
+ missing_props: 
+ADMISSION_TYPE        0.0
+DISCHARGE_LOCATION    0.0
+INSURANCE             0.0
+LANGUAGE              0.0
+RELIGION              0.0
+MARITAL_STATUS        0.0
+ETHNICITY             0.0
+EDREGTIME             0.0
+EDOUTTIME             0.0
+dtype: float64
 
 # Shuffled dataframe:
-       index     id  first_name  last_name  actor_id gender        genre      prob  movie_id                           role                            name  year  rank movies_genre
-0      31155  84880       Orson     Welles    506139      M  Documentary  0.137931    316280  Dr. Charles Rankin/Franz Kind                   Stranger, The  1946   7.4     Thriller
-1       9522  17935       Jules     Dassin    108873      M       Horror  0.040000     94391              Cesar le Milanais       Du rififi chez les hommes  1955   7.9        Crime
-2      29037  40188      Buster     Keaton    242185      M       Action  0.020833    298608    Sherlock, Jr./Projectionist                   Sherlock, Jr.  1924   8.2       Family
-3      17020  74508   Kevin (I)      Smith    444141      M        Crime  0.090909    165977                     Silent Bob  Jay and Silent Bob Strike Back  2001   6.9    Adventure
-4       5722  59497      Marcel     Ophüls    355341      M  Documentary  0.538462     58447                    Interviewer          Chagrin et la piti, Le  1969   8.9  Documentary
-...      ...    ...         ...        ...       ...    ...          ...       ...       ...                            ...                             ...   ...   ...          ...
-37192  20034  13549     Charles    Chaplin     81396      M      Romance  0.027397    198797                Mabel's Husband            Mabel's Married Life  1914   5.7        Short
-37193  32513  65940         Rob     Reiner    394281      M        Music  0.071429    330794                  Marty DiBergi              This Is Spinal Tap  1984   7.9       Comedy
-37194  18298  34658  Alfred (I)  Hitchcock    209748      M  Documentary  0.032258    183833  Man in London railway station              Lady Vanishes, The  1938   8.0        Drama
-37195   6994  73449     Don (I)     Siegel    437313      M      Western  0.157895     70341             Elevator passenger                  Coogan's Bluff  1968   6.6        Crime
-37196   3738  34658  Alfred (I)  Hitchcock    209748      M      Musical  0.016129     40111                  Man on subway                       Blackmail  1929   7.0        Drama
+       index ADMISSION_TYPE         DISCHARGE_LOCATION INSURANCE LANGUAGE           RELIGION MARITAL_STATUS               ETHNICITY            EDREGTIME            EDOUTTIME
+0       2599       ELECTIVE           HOME HEALTH CARE   Private     ENGL           CATHOLIC         SINGLE                   OTHER                                          
+1      15755       ELECTIVE                       HOME   Private                    CATHOLIC         SINGLE                   WHITE                                          
+2      28652      EMERGENCY   REHAB/DISTINCT PART HOSP   Private           PROTESTANT QUAKER        MARRIED   UNKNOWN/NOT SPECIFIED                                          
+3      27677       ELECTIVE                        SNF  Medicare                    CATHOLIC        WIDOWED                   WHITE                                          
+4       5655      EMERGENCY                       HOME   Private     ENGL             JEWISH         SINGLE                   WHITE  2168-05-21 19:25:00  2168-05-21 22:21:00
+...      ...            ...                        ...       ...      ...                ...            ...                     ...                  ...                  ...
+58971  27582      EMERGENCY           HOME HEALTH CARE  Medicare     ENGL           CATHOLIC        WIDOWED                   WHITE                                          
+58972   7255      EMERGENCY   REHAB/DISTINCT PART HOSP   Private                UNOBTAINABLE        MARRIED   UNKNOWN/NOT SPECIFIED                                          
+58973  30436      EMERGENCY                        SNF  Medicare     ENGL             JEWISH       DIVORCED                   WHITE  2172-10-03 20:47:00  2172-10-04 01:08:00
+58974   6956      EMERGENCY           HOME HEALTH CARE  Medicare     ENGL           CATHOLIC         SINGLE                   WHITE                                          
+58975  51266      EMERGENCY  LEFT AGAINST MEDICAL ADVI  Medicaid     ENGL  PROTESTANT QUAKER         SINGLE  BLACK/AFRICAN AMERICAN  2183-08-15 16:55:00  2183-08-16 01:53:00
 
-[37197 rows x 14 columns]
-# cat_cols: Index(['first_name', 'last_name', 'gender', 'genre', 'role', 'name'], dtype='object')
+[58976 rows x 10 columns]
+# cat_cols: Index(['ADMISSION_TYPE', 'DISCHARGE_LOCATION', 'LANGUAGE', 'RELIGION',
+       'MARITAL_STATUS', 'ETHNICITY', 'EDREGTIME', 'EDOUTTIME'],
+      dtype='object')
 
-# num_cols: Index(['index', 'id', 'actor_id', 'prob', 'movie_id', 'year', 'rank'], dtype='object')
-
-# Test - Train Sample:
-Train X:
-[[ 1.68748881  1.69702468  1.63383392 ...  0.          0.
-   0.        ]
- [ 1.57918034 -0.78275662 -0.77319968 ...  0.          0.
-   0.        ]
- [ 0.60626668  0.54513697  0.50767865 ...  0.          0.
-   0.        ]
- ...
- [-1.42272442  1.67426696  1.61049901 ...  0.          0.
-   0.        ]
- [ 0.16036731 -1.58274828 -1.56890112 ...  0.          0.
-   0.        ]
- [ 1.19306949  1.70975357  1.64732402 ...  0.          0.
-   0.        ]]
-Train y:
-[[ 3]
- [ 6]
- [15]
- ...
- [ 4]
- [ 6]
- [ 6]]
-Test X:
-[[-0.211588    1.27222679  1.21327581 ...  0.          0.
-   0.        ]
- [ 1.64409092  0.4666807   0.42972744 ...  0.          0.
-   0.        ]
- [ 0.17238089  0.82571264  0.78716778 ...  0.          0.
-   0.        ]
- ...
- [-1.56306911 -0.06257126 -0.06933056 ...  0.          0.
-   0.        ]
- [-0.67890692  0.59200244  0.55050136 ...  0.          0.
-   0.        ]
- [ 1.26217085  1.12815886  1.07319068 ...  0.          0.
-   0.        ]]
-Test y:
-[[ 0]
- [ 4]
- [ 3]
- ...
- [17]
- [16]
- [ 4]]
+# num_cols: Index(['index'], dtype='object')

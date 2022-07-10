@@ -1,0 +1,13 @@
+[config]
+debug = True
+
+[files]
+log_cnt = tmp/log_cnt.txt
+sql_file = data/mimic.sql
+db_file = data/mimic.db
+
+[db]
+db_name = mimic
+tables_name = admissions
+columns_header = admissions:ADMISSION_TYPE, admissions:DISCHARGE_LOCATION, admissions:INSURANCE, admissions:LANGUAGE, admissions:RELIGION, admissions:MARITAL_STATUS, admissions:ETHNICITY, admissions:EDREGTIME, admissions:EDOUTTIME
+prediction = admissions:INSURANCE
